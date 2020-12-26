@@ -1,5 +1,6 @@
 package net.shimabox.myslideshow
 
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var player: MediaPlayer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -43,5 +45,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        player = MediaPlayer.create(this, R.raw.getdown)
+        player.isLooping = true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        player.start()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        player.pause()
     }
 }
