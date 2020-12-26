@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import net.shimabox.myslideshow.databinding.ActivityMainBinding
 import kotlin.concurrent.timer
 
@@ -36,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.pager.adapter = MyAdapter(this)
+        binding.pager.setPageTransformer(ViewPager2PageTransFormation())
 
         val handler = Handler(Looper.getMainLooper())
         timer(period = 5000) {
@@ -58,5 +61,27 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         player.pause()
+    }
+
+    class ViewPager2PageTransFormation: ViewPager2.PageTransformer {
+        override fun transformPage(page: View, position: Float) {
+            when {
+                position < -1 -> {
+                    page.alpha = 0.2f
+                    page.scaleX = 0.2f
+                    page.scaleY = 0.2f
+                }
+                position <= 1 -> {
+                    page.alpha = Math.max(0.2f, 1 - Math.abs(position))
+                    page.scaleX = Math.max(0.2f, 1 - Math.abs(position))
+                    page.scaleY = Math.max(0.2f, 1 - Math.abs(position))
+                }
+                else -> {
+                    page.alpha = 0.2f
+                    page.scaleX = 0.2f
+                    page.scaleY = 0.2f
+                }
+            }
+        }
     }
 }
