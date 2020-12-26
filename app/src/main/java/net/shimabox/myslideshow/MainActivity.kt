@@ -14,7 +14,6 @@ import net.shimabox.myslideshow.databinding.ActivityMainBinding
 import kotlin.concurrent.timer
 
 class MainActivity : AppCompatActivity() {
-    // インナークラス
     class MyAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
         private val resources = listOf(
             R.drawable.slide00, R.drawable.slide01,
